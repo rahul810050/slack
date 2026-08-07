@@ -7,7 +7,11 @@ export const connectDB = async () => {
 
     console.log("MongoDB connected successfully:", conn.connection.host);
   } catch (error) {
-    console.log("Error connecting to MongoDB:", error);
-    process.exit(1); // Status code 1 indicates an error, 0 indicates success
+    console.error("Error connecting to MongoDB:", error);
+    // Do not exit the process on connection failure — in serverless
+    // environments (like Vercel) exiting will terminate the function.
+    // The app can still run without a DB during build/deploy; ensure
+    // runtime environment variables (MONGO_URI) are set for full
+    // functionality.
   }
 };

@@ -25,10 +25,14 @@ app.get("/", (req, res) => {
   res.send("Hello World! 123");
 });
 
+// Initialize Sentry request handler before routes so it captures requests
+app.use(Sentry.Handlers.requestHandler());
+
 app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use("/api/chat", chatRoutes);
 
-Sentry.setupExpressErrorHandler(app);
+// Attach Sentry error handler after routes
+app.use(Sentry.Handlers.errorHandler());
 
 const startServer = async () => {
   try {
@@ -40,7 +44,6 @@ const startServer = async () => {
     }
   } catch (error) {
     console.error("Error starting server:", error);
-    process.exit(1); // Exit the process with a failure code
   }
 };
 
