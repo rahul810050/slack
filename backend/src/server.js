@@ -25,14 +25,10 @@ app.get("/", (req, res) => {
   res.send("Hello World! 123");
 });
 
-// Initialize Sentry request handler before routes so it captures requests
-app.use(Sentry.Handlers.requestHandler());
-
 app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use("/api/chat", chatRoutes);
 
-// Attach Sentry error handler after routes
-app.use(Sentry.Handlers.errorHandler());
+Sentry.setupExpressErrorHandler(app);
 
 const startServer = async () => {
   try {
