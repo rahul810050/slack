@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// this was the first version, we just changed it at the end of the tutorial
 // const BASE_URL =
 //   import.meta.env.MODE === "development"
 //     ? "http://localhost:5001/api"
